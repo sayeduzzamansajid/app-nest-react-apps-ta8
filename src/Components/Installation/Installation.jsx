@@ -10,6 +10,20 @@ const Installation = () => {
             setInstalled(previouslyInstalled)
         }
     }, [])
+
+    const sortedItem = ()=>{
+        if(sortOrder === 'size-asc'){
+            return [...installed].sort((a,b)=>a.size - b.size)
+        }
+        else if(sortOrder === 'size-dsc'){
+            return [...installed].sort((a,b)=>b.size - a.size)
+        }
+        else{
+            return installed
+        }
+    }
+
+
     return (
         <div className='bg-base-300'>
             <div className='mx-auto pt-[80px] bg-base-300'>
@@ -18,11 +32,17 @@ const Installation = () => {
             </div>
             <div className='mx-auto pt-[80px] bg-base-300 flex justify-between w-[90vw]'>
                 <h1 className="font-bold text-2xl"><span>{installed.length}</span> Apps Found</h1>
-                <select value={sortOrder} onChange={(e)=> setSortOrder(e.target.value)}></select>
+                <label className='form-control w-full max-w-xs'>
+                    <select className='bg-white rounded-lg p-2 select select-borderd' value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+                        <option value="none">Sort by size</option>
+                        <option value="size-asc">Low to High</option>
+                        <option value="size-dsc">High to Low</option>
+                    </select>
+                </label>
             </div>
             <div className=' mx-auto pt-[20px] bg-base-300 pb-[90px]'>
                 {
-                    installed.map(p => <InstallCard p={p}></InstallCard>)
+                    sortedItem().map(p => <InstallCard p={p}></InstallCard>)
                 }
             </div>
         </div>
