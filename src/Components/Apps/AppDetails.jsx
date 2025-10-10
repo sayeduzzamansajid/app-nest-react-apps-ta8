@@ -14,8 +14,24 @@ const AppDetails = () => {
     }
     const { image, title, companyName, description, size, reviews, ratingAvg, downloads } = targetData
     // console.log(image,title,companyName,size ,ratingAvg,downloads)
+
+
+    const handleInstall =()=>{
+        
+        const previousInstalled = JSON.parse(localStorage.getItem("installed"));
+        let updatedInstalled =[];
+        if(previousInstalled){
+            updatedInstalled = [...previousInstalled, targetData];
+        }
+        else{
+            updatedInstalled.push(targetData)
+        }
+        localStorage.setItem("installed", JSON.stringify(updatedInstalled))
+    }
+
+    
     return (
-        <div className='w-ful bg-stone-200'>
+        <div className='w-ful bg-stone-200 pt-[80px]'>
             <div className='w-[85vw] mx-auto p-5 flex gap-6 '>
                 <div className=''>
                     <img className='' src={image} alt="" />
@@ -44,7 +60,7 @@ const AppDetails = () => {
                         </div>
                     </div>
                     <div>
-                        <button className='btn  bg-[#00D390] text-white '>
+                        <button onClick={handleInstall} className='btn  bg-[#00D390] text-white '>
                             Install Now ({size} MB)
                         </button>
                     </div>
@@ -61,37 +77,3 @@ const AppDetails = () => {
 };
 
 export default AppDetails;
-
-// {
-//     "image": "https://i.ibb.co.com/mV4Gsybk/demo-app-3.webp",
-//     "title": "Pixel Art Pro",
-//     "companyName": "Creative Studio",
-//     "id": 103,
-//     "description": "Unleash your inner artist with Pixel Art Pro, the definitive mobile studio for creating stunning pixel art and animations. Whether you're a seasoned professional or a curious beginner, our powerful toolset provides everything you need. The app features an intuitive interface with advanced options like layers, onion skinning for animation, and a customizable color palette. Create intricate sprites for games, mesmerizing animated GIFs, or simply relax with some digital painting. Our app supports various canvas sizes and export formats, making it easy to share your work or integrate it into your projects. Join a vibrant community of artists, participate in challenges, and get inspired by a gallery of amazing creations. With pressure sensitivity support and precision tools, every pixel is under your control. Pixel Art Pro is optimized for both phones and tablets, offering a seamless creative experience on any device.",
-//     "size": 60.8,
-//     "reviews": 120500,
-//     "ratingAvg": 4.8,
-//     "downloads": "15M",
-//     "ratings": [
-//         {
-//             "name": "1 star",
-//             "count": 1500
-//         },
-//         {
-//             "name": "2 star",
-//             "count": 1000
-//         },
-//         {
-//             "name": "3 star",
-//             "count": 5000
-//         },
-//         {
-//             "name": "4 star",
-//             "count": 18000
-//         },
-//         {
-//             "name": "5 star",
-//             "count": 95000
-//         }
-//     ]
-// }

@@ -35,7 +35,7 @@ const Navbar = () => {
                     <ul className="menu menu-horizontal px-1 gap-6">
                         <NavLink to='/'><button className=''>Home</button></NavLink>
                         <NavLink to='/apps'><button className=''>Apps</button></NavLink>
-                        <NavLink><button className=''>Installation</button></NavLink>
+                        <NavLink to='/installation'><button className=''>Installation</button></NavLink>
                     </ul>
                 </div>
                 <div className="navbar-end">
