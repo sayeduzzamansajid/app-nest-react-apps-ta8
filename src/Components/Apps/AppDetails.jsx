@@ -4,32 +4,33 @@ import useProducts from '../../Hooks/useProducts';
 import downloadicon from "../../assets/icon-downloads.png"
 import ratingIcon from '../../assets/icon-ratings.png'
 import reviewIcon from '../../assets/icon-review.png'
+import { Bar, BarChart, CartesianGrid, Legend, Rectangle, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 const AppDetails = () => {
     const { id } = useParams();
-    const { products, loading} = useProducts();
+    const { products, loading } = useProducts();
     const targetData = products.find(p => p.id === parseInt(id));
     if (loading) {
         return <p>Loading ...</p>
     }
-    const { image, title, companyName, description, size, reviews, ratingAvg, downloads } = targetData
+    const { image, title, companyName, description, size, reviews, ratingAvg, downloads, ratings } = targetData
     // console.log(image,title,companyName,size ,ratingAvg,downloads)
 
 
-    const handleInstall =()=>{
-        
+    const handleInstall = () => {
+
         const previousInstalled = JSON.parse(localStorage.getItem("installed"));
-        let updatedInstalled =[];
-        if(previousInstalled){
+        let updatedInstalled = [];
+        if (previousInstalled) {
             updatedInstalled = [...previousInstalled, targetData];
         }
-        else{
+        else {
             updatedInstalled.push(targetData)
         }
         localStorage.setItem("installed", JSON.stringify(updatedInstalled))
     }
 
-    
+
     return (
         <div className='w-ful bg-stone-200 pt-[80px]'>
             <div className='w-[85vw] mx-auto p-5 flex gap-6 '>
@@ -65,6 +66,29 @@ const AppDetails = () => {
                         </button>
                     </div>
                 </div>
+            </div>
+
+            <div className="graph  w-[85vw] h-[300px] mx-auto border-2 border-gray-300 py-12 px-3 border-r-0 border-l-0 my-8">
+                <h3 className='font-bold'>Ratings</h3>
+                <ResponsiveContainer width="100%" height="80%" >
+                     {/* width="100%" height="100%" */}
+                    <BarChart
+                        layout="vertical"
+                        data={ratings}
+                        margin={{ top: 5, right: 30, left: 50, bottom: 5 }}
+                    >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis type="number" />
+                        <YAxis dataKey="name" type="category" />
+                        <Tooltip />
+                        <Bar
+                            dataKey="count"
+                            fill="#ff9500"
+                            radius={[0, 5, 5, 0]} // rounded right edges
+                            barSize={20}
+                        />
+                    </BarChart>
+                </ResponsiveContainer>
             </div>
             <div className='w-[85vw] mx-auto p-5'>
                 {description} <br /><br />
