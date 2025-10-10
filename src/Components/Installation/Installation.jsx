@@ -1,24 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import InstallCard from './InstallCard';
+import useProducts from '../../Hooks/useProducts';
+import LoadingSpinner from '../LoadingSpinner';
 
 const Installation = () => {
+    const { loading } = useProducts()
     const [installed, setInstalled] = useState([])
     const [sortOrder, setSortOrder] = useState('none')
+
     useEffect(() => {
         const previouslyInstalled = JSON.parse(localStorage.getItem("installed"))
         if (previouslyInstalled) {
             setInstalled(previouslyInstalled)
         }
     }, [])
+    if (loading) {
+        return <LoadingSpinner></LoadingSpinner>
+    }
 
-    const sortedItem = ()=>{
-        if(sortOrder === 'size-asc'){
-            return [...installed].sort((a,b)=>a.size - b.size)
+    const sortedItem = () => {
+        if (sortOrder === 'size-asc') {
+            return [...installed].sort((a, b) => a.size - b.size)
         }
-        else if(sortOrder === 'size-dsc'){
-            return [...installed].sort((a,b)=>b.size - a.size)
+        else if (sortOrder === 'size-dsc') {
+            return [...installed].sort((a, b) => b.size - a.size)
         }
-        else{
+        else {
             return installed
         }
     }
@@ -42,7 +49,7 @@ const Installation = () => {
             </div>
             <div className=' mx-auto pt-[20px] bg-base-300 pb-[90px]'>
                 {
-                    sortedItem().map(p => <InstallCard setInstalled={setInstalled} p={p}></InstallCard>)
+                    sortedItem().map(p => <InstallCard key={p.id} setInstalled={setInstalled} p={p}></InstallCard>)
                 }
             </div>
         </div>

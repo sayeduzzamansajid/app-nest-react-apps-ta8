@@ -5,9 +5,16 @@ import { DownloadIcon, Star } from 'lucide-react';
 import play from '../assets/playStore.png'
 import AppCard from './Apps/AppCard';
 import { Link } from 'react-router';
+import { ToastContainer } from 'react-toastify';
+import LoadingSpinner from './LoadingSpinner';
+import playIcon from '../assets/playStoreIcon.png'
+import appStore from '../assets/apstore.png'
 
 const Home = () => {
     const { products, loading, error } = useProducts();
+    if (loading) {
+        return <LoadingSpinner></LoadingSpinner>
+    }
     // console.log(products)
     const featureProduct = products.slice(0, 8);
     return (
@@ -18,8 +25,8 @@ const Home = () => {
                     Our goal is to turn your ideas into digital experiences that truly make an impact.
                 </p>
                 <div className='text-center mt-4 flex gap-6'>
-                    <button className='btn bg-white'>Google Play </button>
-                    <button className='btn bg-white'>App Store</button>
+                    <Link to="https://play.google.com/store/games?hl=en&pli=1"><button className='btn p-1 bg-white'> <img className='w-[30px] h-[30px]' src={playIcon} alt="" /> Google Play </button></Link>
+                    <Link to="https://www.apple.com/app-store/"><button className='btn bg-white p-1'><img className='w-[30px] h-[30px]' src={appStore} alt="" /> App Store</button></Link>
                 </div>
                 <div className='mt-8'>
                     <img src={heroImg} alt="" />
@@ -65,6 +72,7 @@ const Home = () => {
                     <p className='text-gray-400 text-center'>Explore All Trending Apps on Market By Us</p>
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pb-14 mt-10'>
                         {
+
                             featureProduct.map(app => <AppCard key={app.id} app={app}></AppCard>)
                         }
                     </div>
@@ -74,7 +82,9 @@ const Home = () => {
                     <Link to='/apps'><button className='btn bg-blue-400 mx-auto '>Show All</button></Link>
                 </div>
             </div>
+            <ToastContainer />
         </div>
+
     );
 };
 

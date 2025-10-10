@@ -3,25 +3,6 @@ import { Link } from 'react-router';
 
 
 
-// {
-//     "image": "https://example.com/images/nova_launcher.png",
-//     "title": "Nova Launcher",
-//     "companyName": "TeslaCoil Apps",
-//     "id": 101,
-//     "description": "Nova Launcher is a powerful, customizable, and versatile home screen replacement. It brings advanced features to enhance your home screens but still remains a great, user-friendly choice for everyone. Whether you want to completely over",
-//     "size": 25.5,
-//     "reviews": 1450230,
-//     "ratingAvg": 4.5,
-//     "downloads": 50000000,
-//     "ratings": [
-//       { "name": "1 star", "count": 45000 },
-//       { "name": "2 star", "count": 30100 },
-//       { "name": "3 star", "count": 95130 },
-//       { "name": "4 star", "count": 280000 },
-//       { "name": "5 star", "count": 1000000 }
-//     ]
-//   }
-
 const AppCard = ({ app }) => {
     const { image, title, ratingAvg, downloads,id } = app
     return (

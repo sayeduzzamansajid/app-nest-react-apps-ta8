@@ -27,7 +27,8 @@ const router = createBrowserRouter(
                 },
                 {
                     path: '/apps/:id',
-                    element: <AppDetails></AppDetails>
+                    element: <AppDetails></AppDetails>,
+                    // errorElement: <ErrorAppPage></ErrorAppPage>
                 }
 
 

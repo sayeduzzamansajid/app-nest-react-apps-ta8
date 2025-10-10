@@ -8,7 +8,7 @@ const useProducts = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios('../heroAppData.json')
+        axios('/heroAppData.json')
             .then(data => setProducts(data.data))
             .catch(err => setError(err))
             .finally(() => setLoading(false));

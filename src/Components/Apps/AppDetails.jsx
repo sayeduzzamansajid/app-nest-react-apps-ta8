@@ -1,17 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import useProducts from '../../Hooks/useProducts';
 import downloadicon from "../../assets/icon-downloads.png"
 import ratingIcon from '../../assets/icon-ratings.png'
 import reviewIcon from '../../assets/icon-review.png'
 import { Bar, BarChart, CartesianGrid, Legend, Rectangle, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { toast, ToastContainer } from 'react-toastify';
+import LoadingSpinner from '../LoadingSpinner';
+import ErrorAppPage from '../ErrorAppPage';
 
 const AppDetails = () => {
+    const [isClicked, setIsClicked] = useState(false)
     const { id } = useParams();
     const { products, loading } = useProducts();
     const targetData = products.find(p => p.id === parseInt(id));
+    useEffect(() => {
+        const installedApps = JSON.parse(localStorage.getItem("installed")) || [];
+        const alreadyInstalled = installedApps.some(app => app.id === parseInt(id));
+        if (alreadyInstalled) setIsClicked(true);
+    }, [id]);
+   
     if (loading) {
-        return <p>Loading ...</p>
+        return <LoadingSpinner></LoadingSpinner>
+    }
+     if(!targetData){
+        return <ErrorAppPage></ErrorAppPage>
     }
     const { image, title, companyName, description, size, reviews, ratingAvg, downloads, ratings } = targetData
     // console.log(image,title,companyName,size ,ratingAvg,downloads)
@@ -19,15 +32,18 @@ const AppDetails = () => {
 
     const handleInstall = () => {
 
-        const previousInstalled = JSON.parse(localStorage.getItem("installed"));
+        const previousInstalled = JSON.parse(localStorage.getItem("installed")) || [];
         let updatedInstalled = [];
         if (previousInstalled) {
             updatedInstalled = [...previousInstalled, targetData];
         }
         else {
             updatedInstalled.push(targetData)
+            setIsClicked(true)
         }
+        toast.success("Installed successfuly!"),
         localStorage.setItem("installed", JSON.stringify(updatedInstalled))
+
     }
 
 
@@ -61,8 +77,13 @@ const AppDetails = () => {
                         </div>
                     </div>
                     <div>
-                        <button onClick={handleInstall} className='btn  bg-[#00D390] text-white '>
-                            Install Now ({size} MB)
+                        <button onClick={() => {
+                            handleInstall(),
+
+                            setIsClicked(true)
+
+                        }} className='btn  bg-[#00D390] text-white ' disabled={isClicked}>
+                            {isClicked ? "Installed" : `Install Now (${size} MB)`}
                         </button>
                     </div>
                 </div>
@@ -71,7 +92,7 @@ const AppDetails = () => {
             <div className="graph  w-[85vw] h-[300px] mx-auto border-2 border-gray-300 py-12 px-3 border-r-0 border-l-0 my-8">
                 <h3 className='font-bold'>Ratings</h3>
                 <ResponsiveContainer width="100%" height="80%" >
-                     {/* width="100%" height="100%" */}
+                    {/* width="100%" height="100%" */}
                     <BarChart
                         layout="vertical"
                         data={ratings}
@@ -96,6 +117,7 @@ const AppDetails = () => {
                 {description}
             </div>
 
+            <ToastContainer />
         </div>
     );
 };
