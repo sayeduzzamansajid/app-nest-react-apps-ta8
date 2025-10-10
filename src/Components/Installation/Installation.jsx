@@ -42,7 +42,7 @@ const Installation = () => {
             </div>
             <div className=' mx-auto pt-[20px] bg-base-300 pb-[90px]'>
                 {
-                    sortedItem().map(p => <InstallCard p={p}></InstallCard>)
+                    sortedItem().map(p => <InstallCard setInstalled={setInstalled} p={p}></InstallCard>)
                 }
             </div>
         </div>

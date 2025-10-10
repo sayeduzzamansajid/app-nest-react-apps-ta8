@@ -7,7 +7,7 @@ import reviewIcon from '../../assets/icon-review.png'
 
 const AppDetails = () => {
     const { id } = useParams();
-    const { products, loading, error } = useProducts();
+    const { products, loading} = useProducts();
     const targetData = products.find(p => p.id === parseInt(id));
     if (loading) {
         return <p>Loading ...</p>

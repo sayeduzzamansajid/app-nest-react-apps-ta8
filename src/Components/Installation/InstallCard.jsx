@@ -1,10 +1,21 @@
 import { DownloadIcon, Star } from 'lucide-react';
 import React from 'react';
 
-const InstallCard = ({p}) => {
+const InstallCard = ({p,setInstalled}) => {
     console.log(p)
-    const {image, title, size, downloads, ratingAvg} = p
-    console.log(image, title, size, downloads, ratingAvg)
+    const {image,id, title, size, downloads, ratingAvg} = p
+    console.log(image, title, size, downloads, ratingAvg);
+
+    const handleRemove =(id)=>{
+        
+        const previousInstalled = JSON.parse(localStorage.getItem("installed"));
+        let updatedInstalled = previousInstalled.filter(pr => pr.id !== id)
+        //for UI Instant Update 
+        setInstalled(updatedInstalled)
+        localStorage.setItem("installed", JSON.stringify(updatedInstalled))
+    }
+
+
     return (
         <div className='flex justify-between w-[90vw] mx-auto border p-3 items-center bg-white rounded-2xl mt-3'>
             <div className='flex items-center gap-4 '>
@@ -19,7 +30,7 @@ const InstallCard = ({p}) => {
                 </div>
             </div>
             <div>
-                <button className='bg-green-200 px-3 py-2 rounded btn border-2 border-gray-400 hover:scale-110'>Uninstall</button>
+                <button onClick={()=> handleRemove(id)} className='bg-green-200 px-3 py-2 rounded btn border-2 border-gray-400 hover:scale-110'>Uninstall</button>
             </div>
         </div>
     );
