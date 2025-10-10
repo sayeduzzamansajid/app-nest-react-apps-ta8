@@ -4,6 +4,7 @@ import heroImg from '../assets/hero.png'
 import { DownloadIcon, Star } from 'lucide-react';
 import play from '../assets/playStore.png'
 import AppCard from './Apps/AppCard';
+import { Link } from 'react-router';
 
 const Home = () => {
     const { products, loading, error } = useProducts();
@@ -70,7 +71,7 @@ const Home = () => {
 
                 </div>
                 <div className='pb-14'>
-                    <button className='btn bg-blue-400 mx-auto '>Show All</button>
+                    <Link to='/apps'><button className='btn bg-blue-400 mx-auto '>Show All</button></Link>
                 </div>
             </div>
         </div>
